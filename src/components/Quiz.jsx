@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import complete from "../assets/quiz-complete.png"
+import complete from "../assets/quiz-complete.png";
 import QUESTIONS from "../questions";
 import ProgressBar from "./ProgressBar";
 
@@ -8,11 +8,15 @@ export default function Quiz() {
   const selectedIndex = userAnswers.length;
   const quizComplete = selectedIndex === QUESTIONS.length;
 
-  function handleSelectAnswer(answer) {
+  const handleSelectAnswer = useCallback(function handleSelectAnswer(answer) {
     setuserAnswers((userAnswers) => {
       return [...userAnswers, answer];
     });
-  }
+  }, [])
+
+  const skipAnswer = useCallback(() => {
+    handleSelectAnswer(null);
+  }, [handleSelectAnswer]);
 
   if (quizComplete) {
     return (
@@ -30,7 +34,7 @@ export default function Quiz() {
     <div id="quiz">
       <div id="questions">
         <ul id="answers">
-          <ProgressBar timeout={4000} onTimeout={() => handleSelectAnswer(null)} />
+          <ProgressBar timeout={2000} onTimeout={skipAnswer} />
           <h2>{QUESTIONS[selectedIndex].text}</h2>
           {shuffledAnswers.map((answer) => (
             <li key={answer} className="answer">
