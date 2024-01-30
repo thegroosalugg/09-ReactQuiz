@@ -12,7 +12,7 @@ export default function Quiz() {
     setuserAnswers((userAnswers) => {
       return [...userAnswers, answer];
     });
-  }, [])
+  }, []);
 
   const skipAnswer = useCallback(() => {
     handleSelectAnswer(null);
@@ -34,7 +34,12 @@ export default function Quiz() {
     <div id="quiz">
       <div id="questions">
         <ul id="answers">
-          <ProgressBar timeout={2000} onTimeout={skipAnswer} />
+          <ProgressBar
+          // key can be added to any HTLM element and will cause this component to mount & dismount whenever the state of the key changes
+            key={selectedIndex}
+            timeout={2000}
+            onTimeout={skipAnswer}
+          />
           <h2>{QUESTIONS[selectedIndex].text}</h2>
           {shuffledAnswers.map((answer) => (
             <li key={answer} className="answer">
