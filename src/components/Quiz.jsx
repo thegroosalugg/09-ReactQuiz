@@ -1,8 +1,7 @@
 import { useState, useCallback } from "react";
 import complete from "../assets/quiz-complete.png";
 import QUESTIONS from "../questions";
-import ProgressBar from "./ProgressBar";
-import Answers from "./Answers";
+import Question from "./Question";
 
 export default function Quiz() {
   const [userAnswers, setuserAnswers] = useState([]);
@@ -52,21 +51,14 @@ export default function Quiz() {
 
   return (
     <div id="quiz">
-      <div id="questions">
-        <ProgressBar
-          // key can be added to any HTLM element and will cause this component to mount & dismount whenever the state of the key changes
-          key={selectedIndex}
-          timeout={4000}
-          onTimeout={skipAnswer}
-        />
-        <h2>{QUESTIONS[selectedIndex].text}</h2>
-        <Answers
-          answers={QUESTIONS[selectedIndex].answers}
-          answerState={answerState}
-          selectedAnswer={userAnswers[userAnswers.length - 1]}
-          onSelect={handleSelectAnswer}
-        />
-      </div>
+      <Question
+        key={selectedIndex}
+        question={QUESTIONS[selectedIndex]}
+        answerState={answerState}
+        onSelectAnswer={handleSelectAnswer}
+        onSkipAnswer={skipAnswer}
+        selectedAnswer={userAnswers[userAnswers.length - 1]}
+      />
     </div>
   );
 }

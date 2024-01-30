@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function ProgressBar({ timeout, onTimeout }) {
+export default function QuestionTImer({ timeout, onTimeout }) {
   const [timeRemaining, setTimeRemaining] = useState(timeout)
 
   useEffect(() => {
