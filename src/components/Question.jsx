@@ -6,33 +6,25 @@ import QUESTIONS from "../questions";
 export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
   const [answer, setAnswer] = useState({
     selectedAnswer: "",
-    isCorrect: null,
+    state: "",
   });
 
   function handleSelectAnswer(answer) {
     setAnswer({
       selectedAnswer: answer,
-      isCorrect: null,
+      state: "selected",
     });
 
     setTimeout(() => {
       setAnswer({
         selectedAnswer: answer,
-        isCorrect: QUESTIONS[index].answers[0] === answer,
+        state: QUESTIONS[index].answers[0] === answer ? "correct" : "wrong",
       });
 
       setTimeout(() => {
         onSelectAnswer(answer);
       }, 2000);
     }, 1000);
-  }
-
-  let answerState ="";
-
-  if (answer.selectedAnswer && answer.isCorrect !== null) {
-    answerState = answer.isCorrect ? "correct" : "wrong";
-  } else if (answer.selectedAnswer) {
-    answerState = "answered";
   }
 
   return (
@@ -46,7 +38,7 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
       <Answers
         answers={QUESTIONS[index].answers}
         selectedAnswer={answer.selectedAnswer}
-        answerState={answerState}
+        answerState={answer.state}
         onSelect={handleSelectAnswer}
       />
     </div>
