@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import complete from "../assets/quiz-complete.png";
 import QUESTIONS from "../questions";
 import ProgressBar from "./ProgressBar";
+import Answers from "./Answers";
 
 export default function Quiz() {
   const [userAnswers, setuserAnswers] = useState([]);
@@ -49,39 +50,22 @@ export default function Quiz() {
     );
   }
 
-  const shuffledAnswers = [...QUESTIONS[selectedIndex].answers];
-  shuffledAnswers.sort(() => Math.random() - 0.5);
-
   return (
     <div id="quiz">
       <div id="questions">
-        <ul id="answers">
-          <ProgressBar
-            // key can be added to any HTLM element and will cause this component to mount & dismount whenever the state of the key changes
-            key={selectedIndex}
-            timeout={4000}
-            onTimeout={skipAnswer}
-          />
-          <h2>{QUESTIONS[selectedIndex].text}</h2>
-          {shuffledAnswers.map((answer) => {
-            const isSelected = userAnswers[userAnswers.length - 1] === answer;
-            let cssClass;
-
-            if (answerState === "answered" && isSelected) { cssClass = "selected" };
-            if ((answerState === "correct" || answerState === "wrong") && isSelected) { cssClass = answerState };
-
-            return (
-              <li key={answer} className="answer">
-                <button
-                  className={cssClass}
-                  onClick={() => handleSelectAnswer(answer)}
-                >
-                  {answer}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <ProgressBar
+          // key can be added to any HTLM element and will cause this component to mount & dismount whenever the state of the key changes
+          key={selectedIndex}
+          timeout={4000}
+          onTimeout={skipAnswer}
+        />
+        <h2>{QUESTIONS[selectedIndex].text}</h2>
+        <Answers
+          answers={QUESTIONS[selectedIndex].answers}
+          answerState={answerState}
+          selectedAnswer={userAnswers[userAnswers.length - 1]}
+          onSelect={handleSelectAnswer}
+        />
       </div>
     </div>
   );
