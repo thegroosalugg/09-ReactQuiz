@@ -1,9 +1,15 @@
 import { useRef } from "react";
 
-export default function Answers({ answers, answerState, selectedAnswer, onSelect }) {
+export default function Answers({
+  answers,
+  answerState,
+  selectedAnswer,
+  onSelect,
+}) {
   const shuffledAnswers = useRef(); // refs can be used to store values that load independently of state changes
 
-  if (!shuffledAnswers.current) { // once a ref has been declared, the code will not run again
+  if (!shuffledAnswers.current) {
+    // once a ref has been declared, the code will not run again
     shuffledAnswers.current = [...answers];
     shuffledAnswers.current.sort(() => Math.random() - 0.5);
   }
@@ -29,6 +35,7 @@ export default function Answers({ answers, answerState, selectedAnswer, onSelect
             <button
               className={cssClass}
               onClick={() => onSelect(answer)}
+              disabled={answerState !== ""}
             >
               {answer}
             </button>
