@@ -9,6 +9,16 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
     state: "",
   });
 
+  let timer = 7000;
+
+  if (answer.selectedAnswer) {
+    timer = 1000;
+  }
+
+  if (answer.state) {
+    timer = 2000;
+  }
+
   function handleSelectAnswer(answer) {
     setAnswer({
       selectedAnswer: answer,
@@ -31,8 +41,10 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
     <div id="question">
       <QuestionTImer
         // key can be added to any HTML element and will cause this component to mount & dismount whenever the state of the key changes
-        timeout={7000}
-        onTimeout={onSkipAnswer}
+        key={timer}
+        timeout={timer}
+        onTimeout={answer.state === "" ? onSkipAnswer : null}
+        mode={answer.state ? "answered" : null}
       />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers
