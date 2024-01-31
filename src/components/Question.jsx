@@ -24,13 +24,13 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
     setTimeout(() => {
       setAnswer({
         selectedAnswer,
-        state: QUESTIONS[index].answers[0] === answer ? "correct" : "wrong",
+        state: QUESTIONS[index].answers[0] === selectedAnswer ? "correct" : "wrong",
       });
 
       setTimeout(() => {
         onSelectAnswer({
           selectedAnswer,
-          state: QUESTIONS[index].answers[0] === answer ? "correct" : "wrong",
+          state: QUESTIONS[index].answers[0] === selectedAnswer ? "correct" : "wrong",
         });
       }, 2000);
     }, 1000);
