@@ -21,16 +21,18 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
       state: "selected",
     });
 
+    const isCorrect = QUESTIONS[index].answers[0] === selectedAnswer ? "correct" : "wrong"
+
     setTimeout(() => {
       setAnswer({
         selectedAnswer,
-        state: QUESTIONS[index].answers[0] === selectedAnswer ? "correct" : "wrong",
+        state: isCorrect,
       });
 
       setTimeout(() => {
         onSelectAnswer({
           selectedAnswer,
-          state: QUESTIONS[index].answers[0] === selectedAnswer ? "correct" : "wrong",
+          state: isCorrect,
         });
       }, 2000);
     }, 1000);
