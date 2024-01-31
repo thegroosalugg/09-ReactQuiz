@@ -9,26 +9,29 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
     state: "",
   });
 
-  let timer = 7000;
+  let timer = 5000;
 
   if (answer.selectedAnswer) {
     timer = 2000;
   }
 
-  function handleSelectAnswer(answer) {
+  function handleSelectAnswer(selectedAnswer) {
     setAnswer({
-      selectedAnswer: answer,
+      selectedAnswer,
       state: "selected",
     });
 
     setTimeout(() => {
       setAnswer({
-        selectedAnswer: answer,
+        selectedAnswer,
         state: QUESTIONS[index].answers[0] === answer ? "correct" : "wrong",
       });
 
       setTimeout(() => {
-        onSelectAnswer(answer);
+        onSelectAnswer({
+          selectedAnswer,
+          state: QUESTIONS[index].answers[0] === answer ? "correct" : "wrong",
+        });
       }, 2000);
     }, 1000);
   }
@@ -39,8 +42,8 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
         // key can be added to any HTML element and will cause this component to mount & dismount whenever the state of the key changes
         key={timer}
         timeout={timer}
-        onTimeout={answer.state === "" ? onSkipAnswer : null}
-        mode={answer.state ? "answered" : null}
+        onTimeout={answer.selectedAnswer ? null : onSkipAnswer}
+        mode={answer.selectedAnswer ? "answered" : null}
       />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers

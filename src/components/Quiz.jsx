@@ -15,7 +15,10 @@ export default function Quiz() {
   }, []);
 
   const skipAnswer = useCallback(() => {
-    handleSelectAnswer(null);
+    handleSelectAnswer({
+      selectedAnswer: "",
+      state: "missed",
+    });
   }, [handleSelectAnswer]);
 
   if (quizComplete) {
