@@ -12,10 +12,6 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
   let timer = 7000;
 
   if (answer.selectedAnswer) {
-    timer = 1000;
-  }
-
-  if (answer.state) {
     timer = 2000;
   }
 
